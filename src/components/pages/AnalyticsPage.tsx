@@ -1,4 +1,4 @@
-import { BarChart3, TrendingUp, ShieldCheck } from "lucide-react";
+import { BarChart3, TrendingUp, ShieldCheck, ArrowRight, CheckCircle2 } from "lucide-react";
 import type { UserRole } from "../RoleSwitcher";
 
 type AnalyticsPageProps = {
@@ -6,8 +6,12 @@ type AnalyticsPageProps = {
 };
 
 export default function AnalyticsPage({ role }: AnalyticsPageProps) {
+  const insights = role === "Student"
+    ? ["Weekly momentum", "Skill growth", "Next best action"]
+    : ["Engagement by program", "Outcome quality", "Governance review"];
+
   return (
-    <div className="workspace-page">
+    <div className="workspace-page analytics-page">
       <div className="welcome-row">
         <div>
           <p className="eyebrow">ANALYTICS</p>
@@ -50,7 +54,20 @@ export default function AnalyticsPage({ role }: AnalyticsPageProps) {
               : "See which programs have the most momentum and which learning assets need review."}
           </p>
         </div>
-        <button className="secondary-button">Explore insights</button>
+        <div className="discover-provider-list">
+          {insights.map((item) => (
+            <div className="workstream-card" key={item}>
+              <div>
+                <strong>{item}</strong>
+                <p className="muted">Updated with the latest learner or program signal.</p>
+              </div>
+              <span className="page-pill"><CheckCircle2 size={14} /> Active</span>
+            </div>
+          ))}
+        </div>
+        <button className="secondary-button">
+          Explore insights <ArrowRight size={14} />
+        </button>
       </div>
     </div>
   );

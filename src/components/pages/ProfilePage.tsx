@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Target, Clock3, HeartHandshake, Sparkles, ShieldCheck } from "lucide-react";
+import { User, Target, Clock3, HeartHandshake, Sparkles, ShieldCheck, BadgeCheck, ArrowRight } from "lucide-react";
 import type { UserRole } from "../RoleSwitcher";
 
 const initialPreferences = [
@@ -60,6 +60,12 @@ export default function ProfilePage({ role }: { role: UserRole }) {
   const [preferences, setPreferences] = useState(initialPreferences);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  const identityHighlights = role === "Student"
+    ? ["Goal tracking", "Tutor support", "Progress insights"]
+    : role === "Tutor"
+    ? ["Teaching profile", "Learner feedback", "Curriculum preferences"]
+    : ["Governance controls", "Institutional settings", "Quality assurance"];
+
   function togglePreference(index: number) {
     setPreferences((current) =>
       current.map((item, itemIndex) =>
@@ -75,7 +81,7 @@ export default function ProfilePage({ role }: { role: UserRole }) {
   }
 
   return (
-    <div className="workspace-page">
+    <div className="workspace-page profile-page">
       {toastMessage && (
         <div className="toast-banner">{toastMessage}</div>
       )}
@@ -141,6 +147,13 @@ export default function ProfilePage({ role }: { role: UserRole }) {
             </p>
           </div>
         </div>
+        <div className="profile-badges">
+          {identityHighlights.map((item) => (
+            <span className="trust-badge" key={item}>
+              <BadgeCheck size={14} /> {item}
+            </span>
+          ))}
+        </div>
         <ul className="preferences-list">
           {preferences.map((item, index) => (
             <li key={item.label}>
@@ -184,6 +197,15 @@ export default function ProfilePage({ role }: { role: UserRole }) {
               <strong>Governance tip:</strong> Review your compliance dashboard before the next accreditation cycle.
             </div>
           )}
+          <div className="workstream-card profile-action-card">
+            <div>
+              <strong>Next best action</strong>
+              <p className="muted">Keep your profile aligned with current goals and visible signals.</p>
+            </div>
+            <button className="secondary-button">
+              Review profile <ArrowRight size={14} />
+            </button>
+          </div>
         </div>
       </div>
     </div>

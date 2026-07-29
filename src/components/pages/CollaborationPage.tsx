@@ -1,4 +1,4 @@
-import { Users, MessageSquare, Share2 } from "lucide-react";
+import { Users, MessageSquare, Share2, ArrowRight } from "lucide-react";
 import type { UserRole } from "../RoleSwitcher";
 
 type CollaborationPageProps = {
@@ -6,8 +6,18 @@ type CollaborationPageProps = {
 };
 
 export default function CollaborationPage({ role }: CollaborationPageProps) {
+  const workstreams = role === "Student"
+    ? [
+        { title: "Peer study circle", detail: "Shared notes and discussion prompts", status: "Active" },
+        { title: "Tutor feedback loop", detail: "Review comments and next steps", status: "Updated" },
+      ]
+    : [
+        { title: "Content review board", detail: "Approve shared curriculum drafts", status: "In review" },
+        { title: "Team coordination", detail: "Align authoring requests and milestones", status: "Ahead" },
+      ];
+
   return (
-    <div className="workspace-page">
+    <div className="workspace-page collaboration-page">
       <div className="welcome-row">
         <div>
           <p className="eyebrow">COLLABORATION</p>
@@ -52,7 +62,20 @@ export default function CollaborationPage({ role }: CollaborationPageProps) {
               : "Review team activity, open authoring requests, and shared curriculum drafts in one place."}
           </p>
         </div>
-        <button className="secondary-button">Visit workspace</button>
+        <div className="discover-provider-list">
+          {workstreams.map((item) => (
+            <div className="workstream-card" key={item.title}>
+              <div>
+                <strong>{item.title}</strong>
+                <p className="muted">{item.detail}</p>
+              </div>
+              <span className="page-pill">{item.status}</span>
+            </div>
+          ))}
+        </div>
+        <button className="secondary-button">
+          Visit workspace <ArrowRight size={14} />
+        </button>
       </div>
     </div>
   );

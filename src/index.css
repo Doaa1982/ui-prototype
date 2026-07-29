@@ -667,6 +667,17 @@ h3 {
   .role-switcher select {
     max-width: 110px;
   }
+
+  .section-title-row,
+  .discover-filter-bar,
+  .workstream-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .discover-filter-bar {
+    gap: 10px;
+  }
 }
 
 .workspace-page {
@@ -679,6 +690,109 @@ h3 {
   border: 1px solid #e9edf4;
   border-radius: 14px;
   padding: 22px;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.page-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f0f6ff;
+  color: #3978ee;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.discover-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-field.search-field {
+  display: grid;
+  gap: 8px;
+  min-width: min(360px, 100%);
+}
+
+.search-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #dfe5ee;
+  border-radius: 10px;
+  background: #f8fbff;
+}
+
+.search-input-row input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  width: 100%;
+  color: #172033;
+}
+
+.discover-tag-row,
+.profile-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #f6f9fd;
+  border: 1px solid #e5ebf5;
+  color: #2b3b57;
+  font-size: 0.8rem;
+}
+
+.discover-provider-list,
+.profile-guidance {
+  display: grid;
+  gap: 12px;
+}
+
+.workstream-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f8fbff;
+  border: 1px solid #e9edf4;
+}
+
+.workstream-card strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.workstream-card .muted {
+  margin: 0;
+}
+
+.profile-action-card {
+  align-items: center;
 }
 
 .marketplace-filter-toolbar {
@@ -2361,5 +2475,237 @@ select.studio-text-input {
 
   .draft-row {
     grid-template-columns: 1fr;
+  }
+}
+/* --- Terminology Settings --- */
+ 
+.terminology-settings {
+  display: grid;
+  gap: 22px;
+}
+ 
+.terminology-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+ 
+.terminology-intro h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ 
+.terminology-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+ 
+.terminology-preset-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  padding: 14px;
+  background: #f9fafc;
+  border: 1px solid #eef0f5;
+  border-radius: 10px;
+}
+ 
+.terminology-preset-card:hover {
+  border-color: #cdd8ee;
+}
+ 
+.terminology-preset-card.active {
+  border-color: #3978ee;
+  background: #eef4ff;
+}
+ 
+.terminology-preset-card strong {
+  font-size: 13px;
+}
+ 
+.terminology-preset-card .muted {
+  font-size: 11px;
+  margin: 0;
+}
+ 
+.terminology-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+ 
+.terminology-field {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64708a;
+}
+ 
+.terminology-field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+ 
+.terminology-field-hint {
+  font-weight: 400;
+  color: #8793a7;
+  font-size: 11px;
+}
+ 
+.terminology-input {
+  margin-top: 8px;
+}
+ 
+.terminology-override-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: #f8fbff;
+  border: 1px solid #e9edf4;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #475366;
+}
+ 
+.terminology-preview {
+  padding: 16px;
+  background: #f9fafc;
+  border: 1px dashed #dbe1ea;
+  border-radius: 10px;
+}
+ 
+.terminology-preview-path {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 10px;
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+}
+ 
+.terminology-preview-step {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #172033;
+}
+ 
+.terminology-preview-chevron {
+  color: #a9b4c6;
+  margin: 0 2px;
+}
+ 
+.terminology-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #8793a7;
+  font-size: 12px;
+  line-height: 1.5;
+}
+ 
+.terminology-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+ 
+@media (max-width: 900px) {
+  .terminology-presets,
+  .terminology-grid {
+    grid-template-columns: 1fr;
+  }
+}
+ 
+/* --- Educational Portfolio (Provider Profile) --- */
+ 
+.portfolio-section {
+  margin-top: 24px;
+  display: grid;
+  gap: 22px;
+}
+ 
+.portfolio-verification-note {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  margin-top: 4px;
+}
+ 
+.portfolio-about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+ 
+.portfolio-body-text {
+  margin: 8px 0 0;
+  color: #475366;
+  font-size: 13px;
+  line-height: 1.6;
+}
+ 
+.portfolio-tag-group {
+  display: grid;
+  gap: 10px;
+}
+ 
+.portfolio-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+ 
+.portfolio-tag {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: #3978ee;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+}
+ 
+.portfolio-tag-muted {
+  background: #f1f5f9;
+  color: #475366;
+}
+ 
+.portfolio-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+ 
+.portfolio-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: #475366;
+  font-size: 13px;
+  line-height: 1.7;
+}
+ 
+.portfolio-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+ 
+.portfolio-stats-note {
+  font-size: 12px;
+}
+ 
+@media (max-width: 900px) {
+  .portfolio-about-grid,
+  .portfolio-columns {
+    grid-template-columns: 1fr;
+  }
+ 
+  .portfolio-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

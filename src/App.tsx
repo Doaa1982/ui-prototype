@@ -90,7 +90,7 @@ function App() {
       {activePage === "AI Intelligence" && <EducationalIntelligencePanel />}
       {activePage === "Collaboration" && <CollaborationPage role={role} />}
       {activePage === "Analytics" && <AnalyticsPage role={role} />}
-      {activePage === "Studio" && <StudioPage />}
+     {activePage === "Studio" && <StudioPage role={role} />}
     </WorkspaceShell>
   );
 }
