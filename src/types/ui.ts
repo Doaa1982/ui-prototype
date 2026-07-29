@@ -1,0 +1,16 @@
+export type PageId =
+  | "Dashboard"
+  | "Discover"
+  | "Members"
+  | "Pricing"
+  | "Profile"
+  | "Provider Profile"
+  | "Learning Plan"
+  | "Enrollment"
+  | "Marketplace"
+  | "Programs"
+  | "Units & Lessons"
+  | "AI Intelligence"
+  | "Collaboration"
+  | "Analytics"
+  | "Studio";

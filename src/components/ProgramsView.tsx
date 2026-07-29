@@ -253,31 +253,17 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
   }
 
   return (
-    <div className="programs-view" style={{ position: "relative" }}>
+    <div className="workspace-page programs-view">
       {/* Toast Notification Banner */}
       {toastMessage && (
-        <div style={{
-          position: "fixed",
-          bottom: "24px",
-          right: "24px",
-          background: "#1e293b",
-          color: "#fff",
-          padding: "12px 20px",
-          borderRadius: "8px",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          zIndex: 1000,
-          fontSize: "0.9rem"
-        }}>
+        <div className="toast-banner">
           <CheckCircle2 size={18} className="text-green" />
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* Role-tailored Header */}
-      <div className="welcome-row">
+      <div className="welcome-row page-intro">
         <div>
           <p className="eyebrow">
             {role === "Student" && "MY ENROLLED LEARNING PATHWAYS"}
@@ -295,7 +281,7 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
             {role === "Organization" && "Oversee academy programs, assign teaching staff, and ensure educational standards."}
           </p>
         </div>
-        <div>
+        <div className="page-actions">
           {role === "Student" && (
             <button className="primary-button" onClick={() => triggerToast("Exploring global Marketplace catalog...")}>
               <BookOpen size={16} /> Discover New Programs
@@ -315,7 +301,7 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
       </div>
 
       {/* Role-tailored Quick Stats */}
-      <div className="stats-grid" style={{ marginTop: "20px" }}>
+      <div className="stats-grid program-metric-row">
         {role === "Student" && (
           <>
             <div className="stat-card">
@@ -386,14 +372,14 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
         )}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "340px 1fr", gap: "24px", marginTop: "24px" }}>
+      <div className="studio-panel studio-panel-grid programs-panel">
         {/* Programs Sidebar */}
         <div className="studio-card">
-          <h3 style={{ marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+          <h3 className="section-heading section-title-inline">
             <GraduationCap size={18} /> 
             {role === "Student" ? "Enrolled Programs" : role === "Tutor" ? "My Programs" : "Academy Catalog"} ({programs.length})
           </h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div className="program-sidebar-list">
             {programs.map((prog) => (
               <div
                 key={prog.id}
@@ -401,42 +387,35 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
                   setSelectedProgram(prog);
                   setExpandedCourseId(prog.courses[0]?.id || "");
                 }}
-                style={{
-                  padding: "14px",
-                  borderRadius: "10px",
-                  border: prog.id === selectedProgram.id ? "2px solid #3978ee" : "1px solid var(--border)",
-                  background: prog.id === selectedProgram.id ? "var(--surface-hover)" : "transparent",
-                  cursor: "pointer",
-                  transition: "all 0.2s ease"
-                }}
+                className={`program-sidebar-item ${prog.id === selectedProgram.id ? "active" : ""}`}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-                  <span className="tag" style={{ background: "#eaf2ff", color: "#3978ee", fontSize: "0.7rem" }}>
+                <div className="program-sidebar-row">
+                  <span className="tag tag-pill status-pill">
                     {prog.status}
                   </span>
                   {role !== "Student" && (
-                    <span className="muted" style={{ fontSize: "0.75rem" }}>
+                    <span className="muted muted-small">
                       {prog.studentCount} Students
                     </span>
                   )}
                 </div>
-                <strong style={{ display: "block", fontSize: "0.95rem" }}>{prog.title}</strong>
-                <p className="muted" style={{ fontSize: "0.8rem", margin: "6px 0 10px", lineHeight: "1.3" }}>
+                <strong>{prog.title}</strong>
+                <p className="muted card-copy">
                   {prog.description.slice(0, 70)}...
                 </p>
 
                 {role === "Student" ? (
                   <div className="program-progress">
-                    <div className="progress-label" style={{ fontSize: "0.75rem", marginBottom: "4px" }}>
+                    <div className="progress-label compact">
                       <span>My Progress</span>
                       <strong>{prog.progress}%</strong>
                     </div>
-                    <div className="progress-line" style={{ height: "5px" }}>
-                      <span style={{ width: `${prog.progress}%` }} />
+                    <div className="progress-line thin">
+                      <span className="progress-bar" style={{ width: `${prog.progress}%` }} />
                     </div>
                   </div>
                 ) : (
-                  <div className="muted" style={{ fontSize: "0.75rem", display: "flex", alignItems: "center", gap: "4px" }}>
+                  <div className="muted meta-row">
                     <UserCheck size={12} /> Lead: {prog.assignedTutor}
                   </div>
                 )}
@@ -446,208 +425,162 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
         </div>
 
         {/* Selected Program Details & Role-Aware Controls */}
-        <div className="studio-card">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", borderBottom: "1px solid var(--border)", paddingBottom: "16px", marginBottom: "20px" }}>
+        <div className="studio-card program-details-card">
+          <div className="program-details-header">
             <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span className="tag" style={{ textTransform: "uppercase" }}>PROGRAM PATHWAY</span>
+              <div className="program-details-meta">
+                <span className="tag tag-uppercase">PROGRAM PATHWAY</span>
                 {role === "Organization" && (
-                  <span className="tag" style={{ background: "#fef3c7", color: "#d97706" }}>
+                  <span className="tag tag-academy">
                     Academy Branded
                   </span>
                 )}
               </div>
-              <h2 style={{ marginTop: "6px", fontSize: "1.4rem" }}>{selectedProgram.title}</h2>
-              <p className="muted" style={{ marginTop: "4px" }}>{selectedProgram.description}</p>
+              <h2 className="program-title">{selectedProgram.title}</h2>
+              <p className="muted section-copy">{selectedProgram.description}</p>
             </div>
             
             {/* Role-specific Actions */}
-            <div style={{ display: "flex", gap: "8px", flexDirection: "column", alignItems: "flex-end" }}>
+            <div className="program-actions">
               {role === "Student" && (
                 <button
-                  className="primary-button"
-                  style={{ padding: "8px 14px", fontSize: "0.85rem" }}
+                  className="primary-button compact-button"
                   onClick={() => setShowLessonPlayer({ title: selectedProgram.title, unitTitle: "Unit 01: Greetings & Introductions" })}
                 >
                   <Play size={15} /> Resume Program
                 </button>
               )}
               {role === "Tutor" && (
-                <div style={{ display: "flex", gap: "8px" }}>
+                <>
                   <button
-                    className="secondary-button"
-                    style={{ padding: "8px 14px", fontSize: "0.85rem" }}
+                    className="secondary-button compact-button"
                     onClick={() => { setNewTitle(selectedProgram.title); setNewDesc(selectedProgram.description); setShowEditModal(true); }}
                   >
                     <Edit3 size={15} /> Edit Program
                   </button>
                   <button
-                    className="primary-button"
-                    style={{ padding: "8px 14px", fontSize: "0.85rem" }}
+                    className="primary-button compact-button"
                     onClick={() => triggerToast(`Updates for "${selectedProgram.title}" published to Marketplace!`)}
                   >
                     <Share2 size={15} /> Publish Update
                   </button>
-                </div>
+                </>
               )}
               {role === "Organization" && (
-                <div style={{ display: "flex", gap: "8px" }}>
+                <>
                   <button
-                    className="secondary-button"
-                    style={{ padding: "8px 14px", fontSize: "0.85rem" }}
+                    className="secondary-button compact-button"
                     onClick={() => { setSelectedEducator(selectedProgram.assignedTutor); setShowAssignModal(true); }}
                   >
                     <UserCheck size={15} /> Re-assign Educator
                   </button>
                   <button
-                    className="primary-button"
-                    style={{ padding: "8px 14px", fontSize: "0.85rem" }}
+                    className="primary-button compact-button"
                     onClick={() => triggerToast(`Academic Quality Audit Approved for ${selectedProgram.title}!`)}
                   >
                     <ShieldCheck size={15} /> Approve Quality
                   </button>
-                </div>
-              )}
-              {selectedProgram.certificateAvailable && (
-                <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#16a34a", fontSize: "0.8rem", fontWeight: 600 }}>
-                  <Award size={14} /> Certificate Enabled
-                </div>
+                </>
               )}
             </div>
+            {selectedProgram.certificateAvailable && (
+              <div className="program-footer-note">
+                <Award size={14} /> Certificate Enabled
+              </div>
+            )}
           </div>
 
-          <h3 style={{ marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+          <h3 className="section-heading section-title-inline">
             <BookOpen size={18} /> Curriculum Structure (Program → Course → Unit)
           </h3>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div className="program-course-group">
             {selectedProgram.courses.map((course, index) => {
               const isExpanded = course.id === expandedCourseId;
               return (
-                <div
-                  key={course.id}
-                  style={{
-                    border: "1px solid var(--border)",
-                    borderRadius: "10px",
-                    overflow: "hidden",
-                    background: "var(--surface)"
-                  }}
-                >
+                <div key={course.id} className="program-course-card">
                   {/* Course Header */}
                   <div
                     onClick={() => setExpandedCourseId(isExpanded ? "" : course.id)}
-                    style={{
-                      padding: "14px 18px",
-                      background: isExpanded ? "var(--surface-hover)" : "transparent",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      cursor: "pointer"
-                    }}
+                    className={`course-header${isExpanded ? " expanded" : ""}`}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      <span
-                        style={{
-                          width: "28px",
-                          height: "28px",
-                          borderRadius: "50%",
-                          background: "#3978ee",
-                          color: "#fff",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: "0.85rem",
-                          fontWeight: 700
-                        }}
-                      >
-                        {index + 1}
-                      </span>
+                    <div className="course-summary">
+                      <span className="program-course-indicator">{index + 1}</span>
                       <div>
-                        <strong style={{ fontSize: "1rem" }}>{course.title}</strong>
-                        <div className="muted" style={{ fontSize: "0.8rem", marginTop: "2px" }}>
+                        <strong className="course-title">{course.title}</strong>
+                        <div className="course-summary-meta muted">
                           {course.subject} · Level: {course.level} · {course.units.length} Reusable Unit(s)
                         </div>
                       </div>
                     </div>
                     <ChevronRight
                       size={18}
-                      style={{
-                        transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)",
-                        transition: "transform 0.2s ease"
-                      }}
+                      className={`course-toggle-icon ${isExpanded ? "expanded" : ""}`}
                     />
                   </div>
 
                   {/* Course Children Units */}
                   {isExpanded && (
-                    <div style={{ padding: "16px 18px", borderTop: "1px solid var(--border)", background: "#fafafa" }}>
-                      <p className="muted" style={{ fontSize: "0.85rem", marginBottom: "12px" }}>
+                    <div className="course-body">
+                      <p className="muted course-description">
                         {course.description}
                       </p>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                        <h5 style={{ textTransform: "uppercase", fontSize: "0.75rem", letterSpacing: "0.5px", color: "var(--text-muted)", margin: 0 }}>
-                          Units in this Course:
-                        </h5>
-                        {role !== "Student" && (
-                          <button
-                            className="text-button"
-                            style={{ fontSize: "0.8rem" }}
-                            onClick={() => triggerToast(`Added existing Unit to ${course.title}`)}
-                          >
-                            + Add Existing Unit
-                          </button>
-                        )}
-                      </div>
+                                  <div className="program-course-body">
+                        <div className="program-course-header">
+                          <h5 className="course-section-label">
+                            Units in this Course:
+                          </h5>
+                          {role !== "Student" && (
+                            <button
+                              className="text-button text-button-small"
+                              onClick={() => triggerToast(`Added existing Unit to ${course.title}`)}
+                            >
+                              + Add Existing Unit
+                            </button>
+                          )}
+                        </div>
 
-                      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                        {course.units.map((unit) => (
-                          <div
-                            key={unit.id}
-                            style={{
-                              padding: "12px",
-                              borderRadius: "8px",
-                              border: "1px solid var(--border)",
-                              background: "#ffffff",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center"
-                            }}
-                          >
-                            <div>
-                              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                                <Layers size={15} className="text-accent" />
-                                <strong>{unit.title}</strong>
+                        <div className="course-units">
+                          {course.units.map((unit) => (
+                            <div key={unit.id} className="unit-row">
+                              <div className="unit-info">
+                                <div className="unit-summary-row">
+                                  <Layers size={15} className="text-accent" />
+                                  <strong>{unit.title}</strong>
+                                </div>
+                                <div className="unit-meta">
+                                  <span>Topic: {unit.topic}</span>
+                                  <span>{unit.lessonIds.length} Lessons</span>
+                                  <span className="unit-meta-time">
+                                    <Clock size={12} /> {unit.estimatedDurationMinutes} mins
+                                  </span>
+                                </div>
                               </div>
-                              <div className="muted" style={{ fontSize: "0.8rem", marginTop: "4px", paddingLeft: "23px" }}>
-                                Topic: {unit.topic} · {unit.lessonIds.length} Lessons · <Clock size={12} style={{ verticalAlign: "middle" }} /> {unit.estimatedDurationMinutes} mins
+
+                              <div className="unit-actions">
+                                <span className="tag tag-small">
+                                  {unit.difficulty}
+                                </span>
+                                {role === "Student" && (
+                                  <button
+                                    className="secondary-button unit-action-button"
+                                    onClick={() => setShowLessonPlayer({ title: selectedProgram.title, unitTitle: unit.title })}
+                                  >
+                                    Start Unit
+                                  </button>
+                                )}
+                                {role === "Tutor" && (
+                                  <button
+                                    className="secondary-button unit-action-button"
+                                    onClick={() => triggerToast(`Opened Editor for ${unit.title}`)}
+                                  >
+                                    Edit Unit
+                                  </button>
+                                )}
                               </div>
                             </div>
-
-                            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                              <span className="tag" style={{ fontSize: "0.75rem" }}>
-                                {unit.difficulty}
-                              </span>
-                              {role === "Student" && (
-                                <button
-                                  className="secondary-button"
-                                  style={{ padding: "4px 10px", fontSize: "0.75rem" }}
-                                  onClick={() => setShowLessonPlayer({ title: selectedProgram.title, unitTitle: unit.title })}
-                                >
-                                  Start Unit
-                                </button>
-                              )}
-                              {role === "Tutor" && (
-                                <button
-                                  className="secondary-button"
-                                  style={{ padding: "4px 10px", fontSize: "0.75rem" }}
-                                  onClick={() => triggerToast(`Opened Editor for ${unit.title}`)}
-                                >
-                                  Edit Unit
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     </div>
                   )}
@@ -662,13 +595,13 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
 
       {/* Create Program Modal */}
       {showCreateModal && (
-        <div style={modalOverlayStyle}>
-          <div style={modalBoxStyle}>
-            <div style={modalHeaderStyle}>
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <div className="modal-header">
               <h3>Create New Educational Program</h3>
-              <button onClick={() => setShowCreateModal(false)} style={closeBtnStyle}><X size={18} /></button>
+              <button onClick={() => setShowCreateModal(false)} className="modal-close"><X size={18} /></button>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "14px" }}>
+            <div className="modal-body">
               <label className="studio-field">
                 <span>Program Title</span>
                 <input
@@ -700,7 +633,7 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
                   ))}
                 </select>
               </label>
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
+              <div className="modal-actions">
                 <button className="secondary-button" onClick={() => setShowCreateModal(false)}>Cancel</button>
                 <button className="primary-button" disabled={!newTitle.trim()} onClick={handleCreateProgram}>
                   Create Program
@@ -713,13 +646,13 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
 
       {/* Edit Program Modal */}
       {showEditModal && (
-        <div style={modalOverlayStyle}>
-          <div style={modalBoxStyle}>
-            <div style={modalHeaderStyle}>
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <div className="modal-header">
               <h3>Edit Program Details</h3>
-              <button onClick={() => setShowEditModal(false)} style={closeBtnStyle}><X size={18} /></button>
+              <button onClick={() => setShowEditModal(false)} className="modal-close"><X size={18} /></button>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "14px" }}>
+            <div className="modal-body">
               <label className="studio-field">
                 <span>Program Title</span>
                 <input
@@ -737,7 +670,7 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
                   onChange={(e) => setNewDesc(e.target.value)}
                 />
               </label>
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
+              <div className="modal-actions">
                 <button className="secondary-button" onClick={() => setShowEditModal(false)}>Cancel</button>
                 <button className="primary-button" onClick={handleSaveEdit}>Save Changes</button>
               </div>
@@ -748,14 +681,14 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
 
       {/* Re-assign Educator Modal */}
       {showAssignModal && (
-        <div style={modalOverlayStyle}>
-          <div style={modalBoxStyle}>
-            <div style={modalHeaderStyle}>
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <div className="modal-header">
               <h3>Re-assign Lead Educator</h3>
-              <button onClick={() => setShowAssignModal(false)} style={closeBtnStyle}><X size={18} /></button>
+              <button onClick={() => setShowAssignModal(false)} className="modal-close"><X size={18} /></button>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "14px" }}>
-              <p className="muted" style={{ fontSize: "0.85rem" }}>
+            <div className="modal-body">
+              <p className="muted modal-note">
                 Select a certified educator from your organization roster to lead <strong>{selectedProgram.title}</strong>:
               </p>
               <label className="studio-field">
@@ -770,7 +703,7 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
                   ))}
                 </select>
               </label>
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
+              <div className="modal-actions">
                 <button className="secondary-button" onClick={() => setShowAssignModal(false)}>Cancel</button>
                 <button className="primary-button" onClick={handleAssignEducator}>Confirm Assignment</button>
               </div>
@@ -781,23 +714,23 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
 
       {/* Student Lesson Player Preview Modal */}
       {showLessonPlayer && (
-        <div style={modalOverlayStyle}>
-          <div style={{ ...modalBoxStyle, width: "650px" }}>
-            <div style={modalHeaderStyle}>
+        <div className="modal-overlay">
+          <div className="modal-box wide">
+            <div className="modal-header">
               <div>
-                <span className="tag" style={{ background: "#eaf2ff", color: "#3978ee" }}>{showLessonPlayer.title}</span>
-                <h3 style={{ marginTop: "4px" }}>{showLessonPlayer.unitTitle}</h3>
+                <span className="tag preview-tag">{showLessonPlayer.title}</span>
+                <h3 className="modal-heading-small">{showLessonPlayer.unitTitle}</h3>
               </div>
-              <button onClick={() => setShowLessonPlayer(null)} style={closeBtnStyle}><X size={18} /></button>
+              <button onClick={() => setShowLessonPlayer(null)} className="modal-close"><X size={18} /></button>
             </div>
-            <div style={{ marginTop: "16px" }}>
-              <div style={{ width: "100%", height: "260px", background: "#0f172a", borderRadius: "10px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#fff" }}>
-                <Play size={48} style={{ opacity: 0.8, marginBottom: "8px" }} />
-                <span style={{ fontSize: "0.9rem" }}>Interactive Video Lesson Player (Demo Preview)</span>
+            <div className="preview-content">
+              <div className="player-preview-card">
+                <Play size={48} className="lesson-player-icon" />
+                <span className="player-preview-text">Interactive Video Lesson Player (Demo Preview)</span>
               </div>
-              <div style={{ marginTop: "16px", padding: "12px", background: "var(--surface-hover)", borderRadius: "8px" }}>
+              <div className="preview-question-card">
                 <strong>Check for Understanding (Interactive Question):</strong>
-                <p className="muted" style={{ fontSize: "0.85rem", marginTop: "4px" }}>
+                <p className="muted modal-note">
                   Which phrase is used for formal introductions in Arabic?
                 </p>
                 <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
@@ -809,7 +742,7 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
                   </button>
                 </div>
               </div>
-              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
+              <div className="preview-actions">
                 <button className="primary-button" onClick={() => { setShowLessonPlayer(null); triggerToast("Lesson completed! Progress saved."); }}>
                   Complete Lesson & Continue
                 </button>
@@ -822,41 +755,3 @@ export default function ProgramsView({ role }: ProgramsViewProps) {
   );
 }
 
-// Modal Styles
-const modalOverlayStyle: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  background: "rgba(0,0,0,0.5)",
-  backdropFilter: "blur(4px)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  zIndex: 999
-};
-
-const modalBoxStyle: React.CSSProperties = {
-  background: "#ffffff",
-  padding: "24px",
-  borderRadius: "14px",
-  width: "480px",
-  maxWidth: "90%",
-  boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
-};
-
-const modalHeaderStyle: React.CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  borderBottom: "1px solid var(--border)",
-  paddingBottom: "12px"
-};
-
-const closeBtnStyle: React.CSSProperties = {
-  background: "transparent",
-  border: "none",
-  cursor: "pointer",
-  color: "var(--text-muted)"
-};

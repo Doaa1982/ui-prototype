@@ -12,7 +12,6 @@ import {
   ShieldCheck,
   Sparkles,
   Share2,
-  Clock,
   UserCheck
 } from "lucide-react";
 import type { UserRole } from "./RoleSwitcher";
@@ -126,24 +125,10 @@ export default function UnitsView({ role }: UnitsViewProps) {
   }
 
   return (
-    <div className="units-view" style={{ position: "relative" }}>
+    <div className="units-view">
       {/* Toast Notification Banner */}
       {toastMessage && (
-        <div style={{
-          position: "fixed",
-          bottom: "24px",
-          right: "24px",
-          background: "#1e293b",
-          color: "#fff",
-          padding: "12px 20px",
-          borderRadius: "8px",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          zIndex: 1000,
-          fontSize: "0.9rem"
-        }}>
+        <div className="toast-banner">
           <CheckCircle2 size={18} className="text-green" />
           <span>{toastMessage}</span>
         </div>
@@ -189,7 +174,7 @@ export default function UnitsView({ role }: UnitsViewProps) {
       </div>
 
       {/* Role-tailored Quick Stats */}
-      <div className="stats-grid" style={{ marginTop: "20px" }}>
+      <div className="stats-grid">
         {role === "Student" && (
           <>
             <div className="stat-card">
@@ -260,38 +245,32 @@ export default function UnitsView({ role }: UnitsViewProps) {
         )}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: "24px", marginTop: "24px" }}>
+      <div className="units-layout">
         {/* Units list */}
-        <div className="studio-card">
-          <h3 style={{ marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
-            <Layers size={18} /> 
+        <div className="studio-card unit-list-card">
+          <h3 className="section-heading">
+            <Layers size={18} />
             {role === "Student" ? "My Units" : role === "Tutor" ? "Authoring Library" : "Academy Repository"} ({units.length})
           </h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div className="unit-list">
             {units.map((unit) => (
               <div
                 key={unit.id}
                 onClick={() => setSelectedUnit(unit)}
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  border: unit.id === selectedUnit.id ? "2px solid #3978ee" : "1px solid var(--border)",
-                  background: unit.id === selectedUnit.id ? "var(--surface-hover)" : "transparent",
-                  cursor: "pointer"
-                }}
+                className={`unit-list-item${unit.id === selectedUnit.id ? " active" : ""}`}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "#3978ee", fontWeight: 600 }}>
+                <div className="unit-meta-row">
+                  <span className="unit-meta-info">
                     {unit.difficulty} · {unit.estimatedDurationMinutes} mins
                   </span>
                   {role !== "Student" && (
-                    <span className="tag" style={{ fontSize: "0.65rem", background: "#f1f5f9" }}>
+                    <span className="tag unit-status-tag">
                       {unit.status}
                     </span>
                   )}
                 </div>
-                <strong style={{ display: "block", marginTop: "4px" }}>{unit.title}</strong>
-                <div className="muted" style={{ fontSize: "0.8rem", marginTop: "2px" }}>
+                <strong>{unit.title}</strong>
+                <div className="unit-item-topic muted">
                   {role === "Student" ? `Topic: ${unit.topic}` : `Author: ${unit.author}`}
                 </div>
               </div>
@@ -300,23 +279,23 @@ export default function UnitsView({ role }: UnitsViewProps) {
         </div>
 
         {/* Selected Unit Details & Role Controls */}
-        <div className="studio-card">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px", borderBottom: "1px solid var(--border)", paddingBottom: "14px" }}>
+        <div className="studio-card unit-detail-card">
+          <div className="card-header">
             <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span className="tag" style={{ textTransform: "uppercase" }}>REUSABLE UNIT</span>
+              <div className="card-title-row">
+                <span className="tag unit-label">REUSABLE UNIT</span>
                 {role === "Organization" && (
-                  <span className="tag" style={{ background: "#dcfce7", color: "#15803d" }}>
+                  <span className="tag unit-status-badge">
                     Verified Standard
                   </span>
                 )}
               </div>
-              <h2 style={{ marginTop: "6px" }}>{selectedUnit.title}</h2>
+              <h2 className="unit-title">{selectedUnit.title}</h2>
               <p className="muted">Topic: {selectedUnit.topic} · Author: {selectedUnit.author}</p>
             </div>
 
             {/* Role Specific Unit Action Buttons */}
-            <div style={{ display: "flex", gap: "8px" }}>
+            <div className="unit-detail-actions">
               {role === "Student" && (
                 <button
                   className="primary-button"
@@ -367,18 +346,18 @@ export default function UnitsView({ role }: UnitsViewProps) {
             </div>
           </div>
 
-          <div style={{ marginTop: "16px" }}>
-            <h4 style={{ marginBottom: "8px" }}>Learning Objectives</h4>
-            <ul style={{ paddingLeft: "20px", margin: 0, fontSize: "0.9rem", color: "var(--text-muted)" }}>
+          <div className="unit-detail-section">
+            <h4>Learning Objectives</h4>
+            <ul className="unit-objective-list">
               {selectedUnit.objectives.map((obj, i) => (
-                <li key={i} style={{ marginBottom: "4px" }}>{obj}</li>
+                <li key={i}>{obj}</li>
               ))}
             </ul>
           </div>
 
-          <div style={{ marginTop: "24px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-              <h4 style={{ margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+          <div className="unit-detail-section">
+            <div className="unit-detail-header-row">
+              <h4 className="unit-detail-subtitle">
                 <Video size={18} /> Contained Lessons (Delivery Format)
               </h4>
               {role !== "Student" && (
@@ -392,11 +371,11 @@ export default function UnitsView({ role }: UnitsViewProps) {
               )}
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <div style={{ padding: "12px", borderRadius: "8px", background: "var(--surface-hover)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="unit-lessons-list">
+              <div className="unit-lesson-card unit-lesson-item">
                 <div>
                   <strong>Lesson 1: Saying Hello & Greeting Courtesy</strong>
-                  <div className="muted" style={{ fontSize: "0.8rem" }}>Interactive Video · 12 mins</div>
+                  <div className="muted lesson-meta">Interactive Video · 12 mins</div>
                 </div>
                 <button
                   className="secondary-button"
@@ -407,10 +386,10 @@ export default function UnitsView({ role }: UnitsViewProps) {
                 </button>
               </div>
 
-              <div style={{ padding: "12px", borderRadius: "8px", background: "var(--surface-hover)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div className="unit-lesson-card unit-lesson-item">
                 <div>
                   <strong>Lesson 2: Self Introductions & Formal Dialogue</strong>
-                  <div className="muted" style={{ fontSize: "0.8rem" }}>AI Conversation Practice · 15 mins</div>
+                  <div className="muted lesson-meta">AI Conversation Practice · 15 mins</div>
                 </div>
                 <button
                   className="secondary-button"
@@ -428,11 +407,11 @@ export default function UnitsView({ role }: UnitsViewProps) {
       {/* --- MODALS --- */}
       {/* Create Unit Modal */}
       {showCreateModal && (
-        <div style={modalOverlayStyle}>
-          <div style={modalBoxStyle}>
-            <div style={modalHeaderStyle}>
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <div className="modal-header">
               <h3>Create Reusable Unit</h3>
-              <button onClick={() => setShowCreateModal(false)} style={closeBtnStyle}><X size={18} /></button>
+              <button className="modal-close" onClick={() => setShowCreateModal(false)}><X size={18} /></button>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "14px" }}>
               <label className="studio-field">
@@ -453,8 +432,8 @@ export default function UnitsView({ role }: UnitsViewProps) {
                   placeholder="e.g. Professional Correspondence"
                 />
               </label>
-              <div style={{ display: "flex", gap: "12px" }}>
-                <label className="studio-field" style={{ flex: 1 }}>
+              <div className="modal-form-row">
+                <label className="studio-field modal-form-field">
                   <span>Duration (mins)</span>
                   <input
                     type="number"
@@ -463,7 +442,7 @@ export default function UnitsView({ role }: UnitsViewProps) {
                     onChange={(e) => setNewDuration(e.target.value)}
                   />
                 </label>
-                <label className="studio-field" style={{ flex: 1 }}>
+                <label className="studio-field modal-form-field">
                   <span>Difficulty</span>
                   <select
                     className="studio-text-input"
@@ -476,7 +455,7 @@ export default function UnitsView({ role }: UnitsViewProps) {
                   </select>
                 </label>
               </div>
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
+              <div className="modal-actions">
                 <button className="secondary-button" onClick={() => setShowCreateModal(false)}>Cancel</button>
                 <button className="primary-button" disabled={!newTitle.trim()} onClick={handleCreateUnit}>
                   Create Unit
@@ -489,13 +468,13 @@ export default function UnitsView({ role }: UnitsViewProps) {
 
       {/* Edit Unit Modal */}
       {showEditModal && (
-        <div style={modalOverlayStyle}>
-          <div style={modalBoxStyle}>
-            <div style={modalHeaderStyle}>
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <div className="modal-header">
               <h3>Edit Unit Details</h3>
-              <button onClick={() => setShowEditModal(false)} style={closeBtnStyle}><X size={18} /></button>
+              <button className="modal-close" onClick={() => setShowEditModal(false)}><X size={18} /></button>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "14px" }}>
+            <div className="modal-body">
               <label className="studio-field">
                 <span>Unit Title</span>
                 <input
@@ -512,7 +491,7 @@ export default function UnitsView({ role }: UnitsViewProps) {
                   onChange={(e) => setNewTopic(e.target.value)}
                 />
               </label>
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
+              <div className="modal-actions">
                 <button className="secondary-button" onClick={() => setShowEditModal(false)}>Cancel</button>
                 <button className="primary-button" onClick={handleSaveEdit}>Save Changes</button>
               </div>
@@ -523,26 +502,26 @@ export default function UnitsView({ role }: UnitsViewProps) {
 
       {/* Lesson Player Modal */}
       {showLessonPlayer && (
-        <div style={modalOverlayStyle}>
-          <div style={{ ...modalBoxStyle, width: "650px" }}>
-            <div style={modalHeaderStyle}>
+        <div className="modal-overlay">
+          <div className="modal-box wide">
+            <div className="modal-header">
               <div>
                 <span className="tag" style={{ background: "#eaf2ff", color: "#3978ee" }}>{showLessonPlayer.title}</span>
                 <h3 style={{ marginTop: "4px" }}>{showLessonPlayer.lessonTitle}</h3>
               </div>
-              <button onClick={() => setShowLessonPlayer(null)} style={closeBtnStyle}><X size={18} /></button>
+              <button className="modal-close" onClick={() => setShowLessonPlayer(null)}><X size={18} /></button>
             </div>
-            <div style={{ marginTop: "16px" }}>
-              <div style={{ width: "100%", height: "260px", background: "#0f172a", borderRadius: "10px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#fff" }}>
-                <Play size={48} style={{ opacity: 0.8, marginBottom: "8px" }} />
-                <span style={{ fontSize: "0.9rem" }}>Interactive Video Lesson Player (Demo Preview)</span>
+            <div className="modal-body">
+              <div className="lesson-player-preview">
+                <Play size={48} className="lesson-player-icon" />
+                <span className="lesson-player-text">Interactive Video Lesson Player (Demo Preview)</span>
               </div>
-              <div style={{ marginTop: "16px", padding: "12px", background: "var(--surface-hover)", borderRadius: "8px" }}>
+              <div className="preview-question-card">
                 <strong>Check for Understanding (Interactive Question):</strong>
                 <p className="muted" style={{ fontSize: "0.85rem", marginTop: "4px" }}>
                   Which phrase is used for formal introductions in Arabic?
                 </p>
-                <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
+                <div className="preview-question-actions">
                   <button className="secondary-button" style={{ padding: "6px 12px", fontSize: "0.8rem" }} onClick={() => triggerToast("Correct answer! +10 XP")}>
                     <Check size={14} /> Ahlan wa Sahlan
                   </button>
@@ -551,7 +530,7 @@ export default function UnitsView({ role }: UnitsViewProps) {
                   </button>
                 </div>
               </div>
-              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
+              <div className="modal-actions">
                 <button className="primary-button" onClick={() => { setShowLessonPlayer(null); triggerToast("Lesson preview complete!"); }}>
                   Close Preview
                 </button>
@@ -563,42 +542,3 @@ export default function UnitsView({ role }: UnitsViewProps) {
     </div>
   );
 }
-
-// Modal Styles
-const modalOverlayStyle: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  background: "rgba(0,0,0,0.5)",
-  backdropFilter: "blur(4px)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  zIndex: 999
-};
-
-const modalBoxStyle: React.CSSProperties = {
-  background: "#ffffff",
-  padding: "24px",
-  borderRadius: "14px",
-  width: "480px",
-  maxWidth: "90%",
-  boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
-};
-
-const modalHeaderStyle: React.CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  borderBottom: "1px solid var(--border)",
-  paddingBottom: "12px"
-};
-
-const closeBtnStyle: React.CSSProperties = {
-  background: "transparent",
-  border: "none",
-  cursor: "pointer",
-  color: "var(--text-muted)"
-};
