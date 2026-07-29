@@ -2708,4 +2708,277 @@ select.studio-text-input {
   .portfolio-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}/* --- Profile: field layout --- */
+ 
+.profile-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+ 
+@media (max-width: 900px) {
+  .profile-field-row {
+    grid-template-columns: 1fr;
+  }
+}
+ 
+/* --- Profile: Verification list --- */
+ 
+.verification-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+ 
+.verification-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #f8fbff;
+  border: 1px solid #e9edf4;
+  border-radius: 12px;
+}
+ 
+.verification-item strong {
+  font-size: 13px;
+}
+ 
+.verification-meta {
+  font-size: 11px;
+  margin-top: 2px;
+}
+ 
+.verification-status-dot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+ 
+.verification-verified {
+  background: #2f9d6f;
+}
+ 
+.verification-pending {
+  background: #d97706;
+}
+ 
+.verification-unverified,
+.verification-expired {
+  background: #c94b4b;
+}
+ 
+.verification-tag {
+  margin-left: auto;
+  font-size: 10px;
+}
+ 
+.verification-tag-verified {
+  background: #e8fbf0;
+  color: #0f8d44;
+}
+ 
+.verification-tag-pending {
+  background: #fff4db;
+  color: #b86c00;
+}
+ 
+.verification-tag-unverified,
+.verification-tag-expired {
+  background: #fbeaea;
+  color: #c94b4b;
+}
+ 
+/* --- Profile: Achievements --- */
+ 
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+ 
+.achievement-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  background: #f9fafc;
+  border: 1px solid #eef0f5;
+  border-radius: 12px;
+}
+ 
+.achievement-category {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+}
+ 
+.achievement-category-teaching {
+  background: #eef4ff;
+  color: #3978ee;
+}
+ 
+.achievement-category-learning {
+  background: #e8fbf0;
+  color: #0f8d44;
+}
+ 
+.achievement-category-community {
+  background: #f4eefb;
+  color: #8465d9;
+}
+ 
+.achievement-date {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+}
+ 
+@media (max-width: 900px) {
+  .achievement-grid {
+    grid-template-columns: 1fr;
+  }
+}
+ 
+/* --- Profile: Membership summary --- */
+ 
+.membership-summary-card {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+  padding: 18px;
+  background: #f8fbff;
+  border-radius: 12px;
+}
+ 
+.membership-summary-card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+}
+ 
+@media (max-width: 900px) {
+  .membership-summary-card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+ 
+/* --- Members page: role/lifecycle table --- */
+ 
+.members-page .members-table {
+  margin-top: 18px;
+  border-top: 1px solid #e9edf4;
+  border-left: 1px solid #e9edf4;
+}
+ 
+.members-page .members-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border-right: 1px solid #e9edf4;
+  border-bottom: 1px solid #e9edf4;
+}
+ 
+.members-page .members-table-header {
+  background: #f7f9fc;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #697386;
+}
+ 
+.members-page .members-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.members-page .members-expand-toggle {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  color: #8793a7;
+  background: transparent;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+ 
+.members-page .members-expand-toggle:hover {
+  background: #eef4ff;
+  color: #3978ee;
+}
+ 
+.members-page .members-select {
+  margin-top: 0;
+  font-size: 12px;
+  padding: 8px 10px;
+}
+ 
+.members-page .members-status-active {
+  color: #0f8d44;
+}
+ 
+.members-page .members-status-invited,
+.members-page .members-status-pending {
+  color: #b86c00;
+}
+ 
+.members-page .members-status-paused {
+  color: #64708a;
+}
+ 
+.members-page .members-status-terminated {
+  color: #c94b4b;
+}
+ 
+.members-page .members-role-detail {
+  padding: 14px 20px 18px 46px;
+  background: #fbfcfe;
+  border-right: 1px solid #e9edf4;
+  border-bottom: 1px solid #e9edf4;
+}
+ 
+.members-page .lifecycle-stage-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+}
+ 
+.members-page .lifecycle-stage-chip-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+ 
+.members-page .lifecycle-stage-chip {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: #3978ee;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+ 
+.members-page .lifecycle-arrow {
+  color: #c3cddd;
+  flex-shrink: 0;
+}
+ 
+@media (max-width: 900px) {
+  .members-page .members-table-row {
+    grid-template-columns: 1.6fr 1fr 1fr 0.8fr;
+    font-size: 12px;
+  }
 }
